@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title> Yahtzee </title>
+
+<!--	
+Name: Steven Lee
+Course:	235.01
+HomeWork: #2
+Git-Hub: https://github.com/SteveLee6177/csc235-HW2
+-->	
+
+
+
+<style type = "text/css">
+<!--
+
+h1 {text-align: center;}
+div.a {text-align: center;}
+table.t {margin-left: auto; margin-right: auto; text-align: right;}
+button.b {color: #F5E6E3; background-color: #5F00CA; margin-right: 30px;}
+td.c {text-align: right; width:100px;}
+td.b {color: black; background-color: #AEAFFF; width:50px; height:20px;}
+button.c {color: blue; background-color: #AFBEC1; margin-left: 30px; margin-right: 30px;}
+td.a {font-weight: 900;}
+
+
+//use one function for last 3. kind of 3 kind of 4 and kind of 5 called. write 1 function for those 3
+//have boolean variables to know if a box is clicked and disable the hovering
+//do new game reset the variables to the original values
+
+-->
+</style>
+</head>
+
+<body>
+
+<script language = "JavaScript">
+<!--
+
+var v = new Array(0,0,0,0,0);
+var h = new Array(false,false,false,false,false); //false means not clicked
+var f = new Array(0,0,0,0,0,0,0); //how many of the values.
+var n = new Array(true,true,true,true,true,true,true);
+var ttt = 0;
+var sumT = 0;
+
+// False means not to clear, True means to clear. 
+
+
+function roll()
+{
+f[1] = f[2] = f[3] = f[4] = f[5] = f[6] = 0;
+
+for (var i=0; i<5; i++)
+{
+if (!h[i]){
+var d = document.getElementById("d"+i);
+v[i] = Math.floor(6*Math.random()) +1;
+//(b-a) * random + a is the formula //
+d.src = "dice"+v[i]+".gif";
+}
+f[v[i]]++;
+
+}
+}
+function hold(i)
+{
+	d=document.getElementById("d"+i);
+	h[i] = !h[i];
+	if (h[i]) {d.src = "diceX"+v[i]+".gif";}
+	else	  {d.src= "dice" +v[i]+".gif";}
+
+}
+
+function scr(i)
+{
+
+d = document.getElementById("s"+i);
+d.innerHTML = f[i]*i;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            sumT = f[i]*i;                                        
+}
+
+function clr(i)
+{
+if (n[i]){
+d = document.getElementById("s"+i);
+d.innerHTML = "";
+}
+
+}
+
+
+
+function newGame()
+{
+f[1] = f[2] = f[3] = f[4] = f[5] = f[6] = 0;
+for (var i = 0; i<5; i++)
+ {
+ d = document.getElementById("d"+i);
+ d.src = "dice0.gif";
+ h[i] = false;
+ v[i] = 0;
+ }
+ n[1] = n[2] = n[3] = n[4] = n[5] = n[6] = n[7] = true;
+ for (var i = 1; i<7; i++)
+ {
+ d = document.getElementById("s"+i)
+ d.innerHTML = "";
+ }
+ for (var i = 3; i<6; i++)
+ {
+ d = document.getElementById("k"+i)
+ d.innerHTML = ""
+ }
+ 
+ d = document.getElementById("t1")
+ d.innerHTML = ""
+
+
+}
+
+function ofKind(i)
+{
+ d = document.getElementById("d"+i);
+ var b = 0;
+ for (var j = 1; j<6; j++)
+ {
+   if (f[j]==a) {b=f[1]*1+f[2]*2+f[3]*3+f[4]*4+f[5]*5+f[6]*6;}
+ d.innerHTML = b;
+}
+}
+
+function clk(i)
+{
+n[i] = false
+totals();
+}
+
+
+function kscr(i)
+{
+
+d=document.getElementById("k"+i)
+for (var j = 1; j<7; j++)
+{
+if (f[j]>=i)
+{
+d.innerHTML = v[0]+v[1]+v[2]+v[3]+v[4];
+return;
+}
+
+}
+d.innerHTML = 0;
+}
+
+function kclr(i)
+{
+if (n[i]){
+d = document.getElementById("k"+i);
+d.innerHTML = "";
+}
+
+}
+
+function kclk(i)
+{
+n[i] = false
+totals();
+}
+
+function totals()
+{
+d=document.getElementById("t1")
+ttt += sumT;
+d.innerHTML = ttt;
+}
+
+
+
+//-->
+</script>
+
+<h1> Yahtzee </h1>
+
+<div class = "a">
+<img id = "d0" onClick = "hold(0)" src = "dice0.gif">
+<img id = "d1" onClick = "hold(1)" src = "dice0.gif">
+<img id = "d2" onClick = "hold(2)" src = "dice0.gif">
+<img id = "d3" onClick = "hold(3)" src = "dice0.gif">
+<img id = "d4" onClick = "hold(4)" src = "dice0.gif"> </div>
+
+<br> <br>
+<table class = "t">
+<tr> <td class = "a"> 1's </td> <td id="s1" onMouseOver = "scr(1);" onMouseOut = "clr(1);" class = "b" onClick = "clk(1);"> </td> <td class = "c" rowspan = "5"> <button class = "b" onClick = "roll()"> Roll </button> </td> </tr>
+<tr> <td class = "a"> 2's </td> <td id="s2" onMouseOver = "scr(2);" onMouseOut = "clr(2);" class = "b" onClick = "clk(2);"> </td>  </tr>
+<tr> <td class = "a"> 3's </td> <td id="s3" onMouseOver = "scr(3);" onMouseOut = "clr(3);" class = "b" onClick = "clk(3);"> </td>  </tr>
+<tr> <td class = "a"> 4's </td> <td id="s4" onMouseOver = "scr(4);" onMouseOut = "clr(4);" class = "b" onClick = "clk(4);"> </td>  </tr>
+<tr> <td class = "a"> 5's </td> <td id="s5" onMouseOver = "scr(5);" onMouseOut = "clr(5);" class = "b" onClick = "clk(5);"> </td>  </tr>
+<tr> <td class = "a"> 6's </td> <td id="s6" onMouseOver = "scr(6);" onMouseOut = "clr(6);" class = "b" onClick = "clk(6);"> </td> <td class = "c" rowspan = "5"> <button class = "c" onClick = "newGame();"> New Game </button> </td> </tr>
+<tr> <td class = "a"> 3 of a kind </td> <td id = "k3" onMouseOver = "kscr(3);" onMouseOut = "kclr(3);" class = "b" onClick = "kclk(3)";> </td> </tr>
+<tr> <td class = "a"> 4 of a kind </td> <td id = "k4" onMouseOver = "kscr(4);" onMouseOut = "kclr(4);" class = "b" onClick = "kclk(4)";> </td> </tr>
+<tr> <td class = "a"> Yahtzee </td> <td id = "k5" onMouseOver = "kscr(5);" onMouseOut = "kclr(5);" class = "b" onClick = "kclk(5)";> </td> </tr>
+<tr> <td class = "a"> Total </td> <td id = "t1" class = "b" > </td> </tr>
+
+
+</table>
+
+
+
+</body>
+
+</html>
